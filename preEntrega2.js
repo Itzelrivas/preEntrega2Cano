@@ -1,5 +1,5 @@
 //Creamos la class constructor para estructurar los productos
-class   Producto{
+class Producto{
     constructor(productoI, categoriaI, marcaI, precioI, tallaI){
         this.producto = productoI,
         this.categoria = categoriaI,
@@ -14,7 +14,7 @@ class   Producto{
         else if(this.categoria.toLowerCase() == "vestido"){
             console.log(`El ${this.producto} es de la marca ${this.marca}, tiene un precio de ${this.precio} pesos y es talla ${this.talla}`)
         }
-        else if(this.categoria.toLowerCase() == "camisa"){
+        else if(this.categoria.toLowerCase() == "camisas"){
             console.log(`La ${this.producto} es de la marca ${this.marca}, tiene un precio de ${this.precio} pesos y es talla ${this.talla}`)
         }
         else {
@@ -53,10 +53,84 @@ function masProducto() {
     catalogo.push(productoNuevo)
 }
 
-//Desarrollamos las funciones para mostrar el catálogo, buscar por categoría y rango de precios, respectivamente
+//Desarrollamos las funciones para mostrar el catálogo, buscar por categoría, por rango de precios y ordenar de menor a mayor precio, respectivamente
 function mostrarCatalogo(array){
     console.log(`Los productos que en el momento tenemos disponibles, son:`)
     array.forEach(
         producto => producto.mostrarInfoProducto()
     )
 }
+
+function buscarPorPrecio (array){
+    let precioRequerido = parseInt(prompt("Ingrese su presupesto (precio) para mostrarle productos que estan dentro él"))
+    let buscar = array.filter(
+        (Producto) => Producto.precio <= precioRequerido
+    )
+    if (array.length == 0){
+        console.log("Por el momento, no tenemos ningún producto que este dentro de tu precio, lo sentimos mucho, pero no te preocupes, cada dos semanas agregamos más productos :)")
+    }
+    else{
+        mostrarCatalogo(buscar)
+    }
+}
+
+function buscarPorCategoria (array){
+    let categoriaRequerida = prompt("Ingrese la categoría que le gustaría buscar, recuerda que dividimos todos nuestros productos en vestidos, zapatos, bolsas y camisas")
+    let buscar = array.filter(
+        (Producto) => Producto.categoria.toLowerCase() == categoriaRequerida.toLowerCase()
+    )
+    if (array.length == 0){
+        console.log("¡Oh no! Todos los productos de esta categoría se han agotado, pero no te preocupes, cada dos semanas agregamos más productos :)")
+    }
+    else{
+        mostrarCatalogo(buscar)
+    }
+}
+
+function ordenarAscendentemente (array){
+    const menorMayor = [].concat(array)
+    menorMayor.sort ((a,b) => a.precio - b.precio)
+    mostrarCatalogo (menorMayor)
+}
+
+//Menú
+function menu(){
+    let contraseña = "090911"
+    let salir = false
+    do{
+        let opcionElegida = parseInt(prompt(`Elige el número que representa la opción que quiere realizar:
+        1 - Ver catálogo de todos los productos disponibles
+        2 - Filtrar por precio
+        3 - Filtrar por categoría: vestido, bolsa, zapatos o camisas
+        4 - Ordenar todos los productos de menor a mayor precio
+        5 - Tramitar descuento de primera compra
+        6 - Agregar nuevos productos
+        7 - Eliminar productos agotados
+        8 - Salir del menú`))
+        switch(opcionElegida){
+            case 1:
+                mostrarCatalogo(catalogo)
+            break
+            case 2:
+                buscarPorPrecio(catalogo)
+            break
+            case 3:
+                buscarPorCategoria(catalogo)
+            break
+            case 4:
+                ordenarAscendentemente(catalogo)
+            break
+            case 6:
+                masProducto()
+            break
+            case 8:
+                console.log(`¡Gracias por interesarte en nuestros productos! Recuerda que puedes contactarnos al númerp 469 879 8736`)
+                salir = true
+            break
+            default:
+                console.log(`Esa opción no es válida, vuelve a intentarlo`)
+            break
+        }
+    }while(!salir)
+}
+menu()
