@@ -67,7 +67,7 @@ function buscarPorPrecio (array){
         (Producto) => Producto.precio <= precioRequerido
     )
     if (buscar.length == 0){
-        console.log(`Por el momento, no tenemos ningún producto que este dentro de tu precio, lo sentimos mucho, pero no te preocupes, cada dos semanas agregamos más productos :)`)
+        console.log(`Por el momento, no tenemos ningún producto que este dentro de tu presupuesto, lo sentimos mucho, pero no te preocupes, cada dos semanas agregamos más productos :)`)
     }
     else{
         mostrarCatalogo(buscar)
